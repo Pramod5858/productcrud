@@ -1,0 +1,26 @@
+{
+  "car": [
+    {
+      "id": "000001",
+      "name": "Car",
+      "description": "car materrial",
+      "stock": 5
+    }
+  ],
+  "engine": [
+    {
+      "id": "000002",
+      "name": "Engine",
+      "description": "engine materrial",
+      "stock": 5
+    }
+  ],
+  "head": [
+    {
+      "id": "000003",
+      "name": "Head",
+      "description": "head materrial",
+      "stock": 5
+    }
+  ]
+}
