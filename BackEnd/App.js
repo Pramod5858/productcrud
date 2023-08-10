@@ -1,8 +1,8 @@
 const express = require("express");
-const bodyParser = require("body-parser")
+//const bodyParser = require("body-parser")
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const errorMiddleware = require("./ErrorHandler/errorMiddleware.js");
 const route = require("./Index/index.js");
 
 const port = 5500;
@@ -17,19 +17,20 @@ const AtlasDB = "mongodb+srv://productprojectuser:soY47ApLABkrjc75@cluster0.bp8c
 
 const app = express();
 
-app.use(bodyParser.json())
+//app.use(bodyParser.json())
 app.use(cors());
 app.use(express.json());
 app.use("/", route);
+app.use(errorMiddleware);
 
-mongoose.connect(AtlasDB, {useNewUrlParser:true, useUnifiedTopology:true})
-.then(res=>{
-    app.listen(port, hostname, ()=>{
-        console.log(`Server is connected to ${hostname}:${port}`);
-    })
-}
+mongoose.connect(AtlasDB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(res => {
+        app.listen(port, hostname, () => {
+            console.log(`Server is connected to ${hostname}:${port}`);
+        })
+    }
 
-)
-.catch(error=>console.log(error))
+    )
+    .catch(error => console.log(error))
 
 
