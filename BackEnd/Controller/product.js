@@ -1,5 +1,6 @@
 const express = require("express");
 const Productlist = require("../Model/product.js");
+const Users = require("../Model/user.js");
 
 exports.getProductDetails = async (req, res) => {
 
@@ -18,8 +19,11 @@ exports.getProductDetails = async (req, res) => {
 exports.addproductDetails = async (req, res) => {
     try {
         const { id, name, description, stock } = req.body;
-
+        const email = req.emailid;
+        const fineEmail = await Users.findOne({email:email})
+       
         let adddetails = await new Productlist({
+            userId:fineEmail._id,
             id: req.body.id,
             name: req.body.name,
             description: req.body.description,
@@ -29,7 +33,7 @@ exports.addproductDetails = async (req, res) => {
         adddetails.save();
 
         console.log(adddetails);
-        res.status(200).send(adddetails)
+        res.status(200).send({ adddetails })
 
     } catch (error) {
         console.log(error)
@@ -44,7 +48,7 @@ exports.getproduct = async (req, res) => {
         const getIdDetails = await Productlist.findById({ _id: req.params.id })
 
         console.log(getIdDetails);
-        res.status(200).send(getIdDetails)
+        res.status(200).send({ getIdDetails })
 
     } catch (error) {
         console.log(error)
@@ -65,7 +69,7 @@ exports.putupdateproduct = async (req, res) => {
         }, { $set: req.body })
 
         console.log(updateDetails);
-        res.status(200).send(updateDetails)
+        res.status(200).send({ updateDetails })
 
     } catch (error) {
         console.log(error)
@@ -78,7 +82,7 @@ exports.deleteproduct = async (req, res) => {
         let getdetails = await Productlist.deleteOne({ _id: req.params.id })
 
         console.log(getdetails);
-        res.send(getdetails)
+        res.send({ getdetails })
 
     } catch (error) {
         console.log(error)
